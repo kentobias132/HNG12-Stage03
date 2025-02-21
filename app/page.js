@@ -113,7 +113,7 @@ export default function Home() {
         {/* Output Area */}
         <div className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow mb-4">
           {outputText && (
-            <div className="mb-4">
+            <div className="mb-4 border border-r-red-400">
               <p className="text-gray-800">{outputText}</p>
               <p className="text-sm text-gray-500 mt-2">
                 Detected Language: {detectedLang}
@@ -129,7 +129,7 @@ export default function Home() {
           )}
 
           {translatedText && (
-            <div className="mb-4">
+            <div className="mb-4 border border-r-red-400">
               <p className="text-gray-800 font-semibold">Translated Text:</p>
               <p className="text-gray-600">{translatedText}</p>
             </div>
