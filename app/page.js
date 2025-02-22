@@ -26,7 +26,7 @@ export default function Home() {
     setTranslatedText("");
 
     try {
-      // Detect the language of the input text
+      // this function detect the language of the input text
       const languageDetector = await self.ai.languageDetector.create();
       const detectedLanguageArr = await languageDetector.detect(userInput);
       const sourceLanguage = detectedLanguageArr[0].detectedLanguage;
@@ -41,7 +41,7 @@ export default function Home() {
     }
   };
 
-  // Handle summarization
+  // summarization function
   const handleSummarize = async () => {
     if (!outputText || detectedLang !== "en" || outputText.length <= 150)
       return;
@@ -73,7 +73,7 @@ export default function Home() {
     }
   };
 
-  // Handle translation
+  // translation function
   const handleTranslate = async () => {
     if (!outputText || !targetLang) return;
 
@@ -109,7 +109,7 @@ export default function Home() {
   };
 
   return (
-    <div className=" p-4">
+    <div className="p-4 font-inter ">
       <div className="flex w-full justify-center mb-56">
         {/* Output Area */}
         <div className="flex-1 overflow-y-hidden p-4 mb-4 max-w-4xl">
@@ -165,10 +165,10 @@ export default function Home() {
               aria-label="Text input"
             />
 
-            <div className="flex items-center justify-between md:px-4">
+            <div className="flex flex-col md:px-4">
               {/* Action Buttons */}
-              {outputText && (
-                <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 w-[80%] lg:w-[90%]">
+              <div className="flex justify-between items-center gap-2 w-full">
+                {outputText && (
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2 py-2">
                       <select
@@ -187,15 +187,18 @@ export default function Home() {
                       <button
                         onClick={handleTranslate}
                         disabled={isLoading}
-                        className="p-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
+                        className="text-sm p-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
                         aria-label="Translate"
                       >
                         {isLoading ? "Translating..." : "Translate"}
                       </button>
                     </div>
                   </div>
+                )}
 
-                  <div>
+                {/* send button */}
+                <div className="p-2 w-full flex justify-end gap-4">
+                  <div className="hidden md:block">
                     {detectedLang === "en" && outputText.length > 150 && (
                       <button
                         onClick={handleSummarize}
@@ -207,41 +210,52 @@ export default function Home() {
                       </button>
                     )}
                   </div>
-                </div>
-              )}
 
-              <div>
-                <button
-                  onClick={handleSend}
-                  disabled={isLoading}
-                  className="absolute right-5 bottom-4 bg-black text-white rounded-full hover:bg-gray-800 disabled:bg-gray-400"
-                  aria-label="Send"
-                >
-                  {isLoading ? (
-                    <Image
-                      src={"/loading.gif"}
-                      width={40}
-                      height={40}
-                      alt="loading"
-                    />
-                  ) : (
-                    <svg
-                      width="40"
-                      height="40"
-                      viewBox="0 0 32 32"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon-2xl"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M15.1918 8.90615C15.6381 8.45983 16.3618 8.45983 16.8081 8.90615L21.9509 14.049C22.3972 14.4953 22.3972 15.2189 21.9509 15.6652C21.5046 16.1116 20.781 16.1116 20.3347 15.6652L17.1428 12.4734V22.2857C17.1428 22.9169 16.6311 23.4286 15.9999 23.4286C15.3688 23.4286 14.8571 22.9169 14.8571 22.2857V12.4734L11.6652 15.6652C11.2189 16.1116 10.4953 16.1116 10.049 15.6652C9.60265 15.2189 9.60265 14.4953 10.049 14.049L15.1918 8.90615Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  )}
-                </button>
+                  <button
+                    onClick={handleSend}
+                    disabled={isLoading}
+                    className=" bg-black text-white rounded-full hover:bg-gray-800 disabled:bg-gray-400"
+                    aria-label="Send"
+                  >
+                    {isLoading ? (
+                      <Image
+                        src={"/loading.gif"}
+                        width={35}
+                        height={35}
+                        alt="loading"
+                        className="md:w-[40px] md:h-[40px]"
+                      />
+                    ) : (
+                      <svg
+                        width="35"
+                        height="35"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="icon-2xl md:w-[40px] md:h-[40px]"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M15.1918 8.90615C15.6381 8.45983 16.3618 8.45983 16.8081 8.90615L21.9509 14.049C22.3972 14.4953 22.3972 15.2189 21.9509 15.6652C21.5046 16.1116 20.781 16.1116 20.3347 15.6652L17.1428 12.4734V22.2857C17.1428 22.9169 16.6311 23.4286 15.9999 23.4286C15.3688 23.4286 14.8571 22.9169 14.8571 22.2857V12.4734L11.6652 15.6652C11.2189 16.1116 10.4953 16.1116 10.049 15.6652C9.60265 15.2189 9.60265 14.4953 10.049 14.049L15.1918 8.90615Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="md:hidden">
+                {detectedLang === "en" && outputText.length > 150 && (
+                  <button
+                    onClick={handleSummarize}
+                    disabled={isLoading}
+                    className="p-2 w-full bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-400"
+                    aria-label="Summarize"
+                  >
+                    Summarize
+                  </button>
+                )}
               </div>
             </div>
           </div>
